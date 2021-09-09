@@ -1,0 +1,20 @@
+{
+  "name": "postchi",
+  "version": "0.1.0",
+  "description": "postchi is an email validation tool without sending any email.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "local": "node ./src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amirandalibi/postchi.git"
+  },
+  "author": "Amir Andalibi",
+  "license": "GNU General Public License v2.0",
+  "bugs": {
+    "url": "https://github.com/amirandalibi/postchi/issues"
+  },
+  "homepage": "https://github.com/amirandalibi/postchi#readme"
+}
