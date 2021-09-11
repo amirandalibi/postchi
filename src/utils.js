@@ -39,21 +39,9 @@ function get_request_body(req) {
   });
 }
 
-const send_response = (res, valid, http_code) => {
-  res.writeHead(
-  http_code, {
-    'Content-Type': 'application/json'
-  });
-  res.write(JSON.stringify({ 
-    is_valid: valid,
-  }));
-  res.end();
-}
-
 module.exports = { 
   get_request_body,
   get_domain,
-  send_response,
   sort_mx,
   get_cmd
 };

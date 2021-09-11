@@ -1,13 +1,10 @@
 'use strict';
 
 const commands = require('../commands');
-const { get_request_body, send_response } = require('../utils');
-
-class routes extends commands{
-  constructor(os) {
-    super();
-  }
-
+const c = new commands;
+const { get_request_body } = require('../utils');
+const response_obj = require('../api/response');
+class routes {
   validate_route = async (req, res, os) => {
     if (req.url === "/v1/address/validate" 
       && req.method === "POST") {
@@ -17,20 +14,32 @@ class routes extends commands{
       
       if (email) {
         try {
-          const mx = await this.dig(email);
-          if (mx) {
-            const smtp_response = this.telnet(os, mx, 'test@example.org', email);
+          const mx = await c.dig(email);
 
-            send_response(res, smtp_response, 200);
+          if (mx) {
+            const smtp_response = c.telnet(os, mx, 'test@example.org', email);
+
+            response_obj(res, { email, is_valid: smtp_response });
           } else {
-            send_response(res, 'Domain not found', 200);
+            response_obj(res, { 
+              email,
+              is_valid: false,
+              reason: 'No mail server found'
+            });
           }
         } catch (e) {
-          send_response(res, 'Domain not found', 200);
+          response_obj(res, {
+            email,
+            is_valid: false,
+            reason: e
+          });
         }
       }
     } else {
-      send_response(res, 'Invalid Request', 400);
+      response_obj(res, {
+        status: 400,
+        message: 'Invalid Request'
+      });
     }
   }
 }

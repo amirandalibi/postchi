@@ -11,21 +11,30 @@ class commands {
   constructor(os) {
     this.os = os;
   }
-
+  /**
+   * Extract the domain name and check the NS and MX records
+   * @param {String} rcpt email address
+   * @returns Promise
+   */
   dig = (rcpt) => {
     const domain_name = get_domain(rcpt);
   
     return new Promise((resolve, reject) => {
-      resolver.resolveMx(domain_name, (err, addresses) => {
-        if (err) {
-          reject('domain not found');
-        } else {
-          const sorted_mx = sort_mx(addresses);
-          
-          resolve(sorted_mx);
+      resolver.resolveNs(domain_name, (error) => {
+        if (error) {
+          reject('No domain found');
         }
+        resolver.resolveMx(domain_name, (err, addresses) => {
+          if (err) {
+            reject(err);
+          } else {
+            const sorted_mx = sort_mx(addresses);
+
+            resolve(sorted_mx);
+          }
+        });
       });
-    });
+    })
   }
 
   /**
