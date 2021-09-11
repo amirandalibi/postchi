@@ -26,6 +26,6 @@ Example of a failed mailbox verification result:
     "address": "non-existent-inbox@realdomain.com",
     "is_disposable_address": false,
     "is_valid": false,
-    "reason": [mailbox_does_not_exist]
+    "reason": 'mailbox_does_not_exist'
 }
 ```
