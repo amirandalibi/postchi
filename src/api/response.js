@@ -19,8 +19,8 @@ const response = (res, obj) => {
     JSON.stringify({ 
       address: email,
       is_valid,
-      ...(is_disposable_address && {is_disposable_address}),
-      ...(reason.length && {reason})
+      ...(is_disposable_address && { is_disposable_address }),
+      ...(reason.length && { reason })
     })
   );
   res.end();

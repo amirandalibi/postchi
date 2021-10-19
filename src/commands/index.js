@@ -5,7 +5,7 @@ const { Resolver } = require('dns');
 const resolver = new Resolver();
 const { sort_mx, get_cmd, get_domain } = require('../utils');
 
-resolver.setServers(['8.8.8.8']); //set to an external DNS
+resolver.setServers(['1.1.1.1']); //set to an external DNS
 
 class commands {
   constructor(os) {
@@ -21,18 +21,18 @@ class commands {
   
     return new Promise((resolve, reject) => {
       resolver.resolveNs(domain_name, (error) => {
-        if (error) {
-          reject('No domain found');
-        }
-        resolver.resolveMx(domain_name, (err, addresses) => {
-          if (err) {
-            reject(err);
-          } else {
-            const sorted_mx = sort_mx(addresses);
+        if (error) reject('domain_not_found');
+        else {
+          resolver.resolveMx(domain_name, (err, addresses) => {
+            if (err) {
+              reject('mail_host_not_found');
+            } else {
+              const sorted_mx = sort_mx(addresses);
 
-            resolve(sorted_mx);
-          }
-        });
+              resolve(sorted_mx);
+            }
+          });
+        }
       });
     })
   }

@@ -20,14 +20,8 @@ class routes {
             const smtp_response = c.telnet(os, mx, 'test@example.org', email);
 
             response_obj(res, { email, is_valid: smtp_response });
-          } else {
-            response_obj(res, { 
-              email,
-              is_valid: false,
-              reason: 'No mail server found'
-            });
           }
-        } catch (e) {
+        } catch(e) {
           response_obj(res, {
             email,
             is_valid: false,
