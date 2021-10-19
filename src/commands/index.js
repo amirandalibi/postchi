@@ -46,7 +46,7 @@ class commands {
   * @returns Boolean
   */
   telnet = (os, host, from, rcpt) => {
-    const cmd = get_cmd(os.type);
+    const cmd = get_cmd(os);
     const telnet = spawnSync(
       'sh',
       [
